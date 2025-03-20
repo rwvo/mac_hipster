@@ -1,4 +1,4 @@
-# Mac Hipster: building HIP applications on macOS
+# Mac Hipster: building HIP applications on Apple silicon
 ## Imagine this...
 
 You're at 30,000 ft, traveling about 500 mph on an 11-hour international flight.
@@ -14,7 +14,7 @@ Your second biggest passion–after watching international arthouse films–is d
 If only you could do that on your MacBook...
 
 The instructions in this Readme have you covered.
-While running HIP applications on macOS is a bit challenging, given the lack of a "Team Red" GPU,
+While running HIP applications on Apple Silicon is a bit challenging, given the lack of a "Team Red" GPU,
 compiling and linking is entirely possible. You just need to prepare the MacBook a little bit before
 leaving on your international trip. You do need access to a Linux machine with an AMD GPU and a
 working ROCm install, including the ROCm development packages; we'll copy them over to the MacBook,
