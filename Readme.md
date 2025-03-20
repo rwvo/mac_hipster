@@ -1,7 +1,7 @@
 # Mac Hipster: building HIP applications on Apple silicon
 ## Imagine this...
 
-You're at 30,000 ft, traveling about 500 mph on an 11-hour international flight.
+You're at 30,000 ft, traveling at about 500 mph on an 11-hour international flight.
 The entertainment system in row 42 is broken. You are in seat 42-B. Ah, just as well,
 the movie selection was substandard anyway. The guy next to you opens his Windows laptop,
 and starts watching Avatar. Avatar! On Windows! Could it get any worse? With a condescending
