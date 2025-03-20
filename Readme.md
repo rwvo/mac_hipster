@@ -14,8 +14,8 @@ Your second biggest passion–after watching international arthouse films–is d
 If only you could do that on your MacBook...
 
 The instructions in this Readme have you covered.
-While running HIP applications on Apple Silicon is a bit challenging, given the lack of a "Team Red" GPU,
-compiling and linking is entirely possible. You just need to prepare the MacBook a little bit before
+While _running_ HIP applications on Apple Silicon is a bit challenging, given the lack of a "Team Red" GPU,
+_compiling_ and _linking_ is entirely possible. You just need to prepare the MacBook a little bit before
 leaving on your international trip. You do need access to a Linux machine with an AMD GPU and a
 working ROCm install, including the ROCm development packages; we'll copy them over to the MacBook,
 and then use llvm/clang to cross-compile for x86 with AMD GPU support.
