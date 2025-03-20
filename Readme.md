@@ -79,7 +79,7 @@ below, we'll assume the latter; adapt to whatever the situation is on your Linux
 
 1. **On the Linux machine**:
    ```bash
-   sudo tar -cvpf - /opt/rocm-6.3.1 | xz -T0 -1 > /tmp/rocm_backup.tar.xz
+   tar -cvpf - /opt/rocm-6.3.1 | xz -T0 -1 > /tmp/rocm_backup.tar.xz
    ```
    Note: the `-T0` argument to `xz` tells it to use all available CPU cores. The `-1` is the compression
    level, ranging from 0 (fast, lest compression) to 9 (slow, better compression). On my machine, `-1` took
@@ -123,7 +123,7 @@ exit
 cd ~
 sudo tar -cvpf - sysroot_jammy | xz -T0 -1 > /tmp/sysroot_jammy.tar.xz
 ```
-Note: see the comment about in Section 3.1 about the `xz` arguments.
+Note: see the comment above in Section 3.1 about the `xz` arguments.
 
 ### B. Transfer + Extract on macOS
 ```bash
@@ -190,7 +190,7 @@ hip_hello: ELF 64-bit LSB pie executable, x86-64, ...
 ```
 
 ### Transfer + Run on Linux
-Copy `hip_hello` to the Linux machine:
+Copy `hip_hello` to the Linux machine. Then run it there:
 ```bash
 ./hip_hello
 ```
