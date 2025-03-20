@@ -13,6 +13,18 @@ you cheapskate.
 Your second biggest passion–after watching international arthouse films–is developing HIP applications.
 If only you could do that on your MacBook...
 
+The instructions in this Readme have you covered.
+While running HIP applications on macOS is a bit challenging, given the lack of a "Team Red" GPU,
+compiling and linking is entirely possible. You just need to prepare the MacBook a little bit before
+leaving on your international trip. You do need access to a Linux machine with an AMD GPU and a
+working ROCm install, including the ROCm development packages; we'll copy them over to the MacBook,
+and then use llvm/clang to cross-compile for x86 with AMD GPU support.
+
+Just follow along with the 5 steps further. Some of the steps may seem a bit daunting, but the total
+number of steps is less than half of those of the _Alcoholics Anonymous_ program. Easy!
+
+"But wait", you say, "can't we just simply..."
+
 ## Containers? Virtual Machines? Meh...
 
 One approach to building HIP applications on a Mac is to use a container (e.g., Docker)
@@ -30,14 +42,7 @@ Our approach avoids these issues by enabling native cross-compilation directly o
 This method is lightweight, efficient, and allows you to leverage macOS's development tools
 while still targeting Linux for execution.
 
-While running HIP applications on macOS is a bit challenging, given the lack of a "Team Red" GPU,
-compiling and linking is entirely possible. You just need to prepare the MacBook a little bit before
-leaving on your international trip. You do need access to a Linux machine with an AMD GPU and a
-working ROCm install, including the ROCm development packages; we'll copy them over to the MacBook,
-and then use llvm/clang to cross-compile for x86 with AMD GPU support.
-
-Just follow along with the 5 steps below. Some of the steps may seem a bit daunting, but the total
-number of steps is less than half of those of the _Alcoholics Anonymous_ program. Easy!
+With this distraction out of the way, let's go!
 
 ## 1. Test Program for HIP Compilation
 
