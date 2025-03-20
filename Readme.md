@@ -74,7 +74,7 @@ After this, you have a custom LLVM in `/opt/llvm-amdgpu` with all necessary comp
 ## 3. Copying ROCm from Linux
 
 We need the ROCm libraries (e.g. `amdhip64`) to link HIP code. The ROCm installation directory
-may be inversioned, e.g., `/opt/rocm`, or it may be versioned, e.g., `/opt/rocm-6.3.1`. In the examples
+may be unversioned, e.g., `/opt/rocm`, or it may be versioned, e.g., `/opt/rocm-6.3.1`. In the examples
 below, we'll assume the latter; adapt to whatever the situation is on your Linux machine.
 
 1. **On the Linux machine**:
