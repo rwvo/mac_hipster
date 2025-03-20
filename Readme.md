@@ -150,7 +150,7 @@ below, we'll assume the latter; adapt to whatever the situation is on your Linux
    tar -cvpf - /opt/rocm-6.3.1 | xz -T0 -1 > /tmp/rocm_backup.tar.xz
    ```
    Note: the `-T0` argument to `xz` tells it to use all available CPU cores. The `-1` is the compression
-   level, ranging from 0 (fast, lest compression) to 9 (slow, better compression). On my machine, `-1` took
+   level, ranging from 0 (fast, least compression) to 9 (slow, better compression). On my machine, `-1` took
    about 1 minute and resulted in a 2.2GB file, while `-9` took about 8 minutes and resulted in a 1.5GB file.
    Pick your poison.
 2. **On the Mac**:
