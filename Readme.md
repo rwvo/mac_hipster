@@ -247,6 +247,8 @@ Compile:
 - **`-fuse-ld=/opt/llvm-amdgpu/bin/ld.lld`**: Uses LLVM’s LLD linker, which understands Linux flags (instead of Apple’s `ld`).
 - **`--sysroot=/opt/sysroot_jammy`**: Points Clang to the Ubuntu sysroot for headers/libs.
 - **`--gcc-toolchain=/opt/sysroot_jammy`**: Uses the GCC libraries in the sysroot instead of macOS libs.
+- **`-mcpu=gfx906`**: builds for Radeon VII or MI50/60. Use `gfx908` for MI100, `gfx90a` for MI200 and variants,
+  and `gfx940 `, `gfx941` or `gfx942` for the MI300 variants.
 
 ### Verify the ELF Output
 ```bash
