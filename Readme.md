@@ -20,7 +20,7 @@ or a virtual machine (e.g., UTM) to emulate a Linux environment on macOS. These 
 allow you to build HIP applications directly on a Linux system without needing to cross-compile.
 However, they come with significant drawbacks:
 
-1. **Performance Overhead**: A Virtual machine introduces additional layers of abstraction,
+1. **Performance Overhead**: A virtual machine introduces additional layers of abstraction,
    which leads to significantly lower performance compared to native compilation. An x86 Linux
    container still needs an emulation layer in order to run on ARM.
 2. **Resource Usage**: Running a VM or container requires more system resources, such as CPU,
@@ -244,7 +244,7 @@ Hello from threadIdx.x = 1
 4. **`ld-linux-x86-64.so.2` not found**: Symlink it inside `/opt/sysroot_jammy/lib64`.
 
 
-Future plans
+## Future plans
 Being able to compile simple HIP codes on macOS is a nice first step. It would be nice to also be
 able to compile more complex CMake-based HIP projects. Ideally, we'd just pass some extra flags to
 CMake to point it to our cross-compiler, and otherwise configure as usual. Initial attempts to use
