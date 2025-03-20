@@ -1,21 +1,53 @@
 # Mac Hipster: building HIP applications on macOS
 ## Imagine this...
 
-You're at 30,000 ft, traveling about 500 mph on an 11-hour international flight. The entertainment system in row 42 is broken. You are in seat 42-B. Ah, just as well, the movie selection was substandard anyway. The guy next to you opens his Windows laptop, and starts watching Avatar. Avatar! On Windows! Could it get any worse? With a condescending arch of the brow, you open your MacBook and navigate to the folder where you illegally downloaded Krzysztof Kieślowski's _Trois Couleurs_–only to realize that you downloaded them in *.mkv format and the free version of Infuse doesn't support that. Serves you well, you cheapskate.
+You're at 30,000 ft, traveling about 500 mph on an 11-hour international flight.
+The entertainment system in row 42 is broken. You are in seat 42-B. Ah, just as well,
+the movie selection was substandard anyway. The guy next to you opens his Windows laptop,
+and starts watching Avatar. Avatar! On Windows! Could it get any worse? With a condescending
+arch of the brow, you open your MacBook and navigate to the folder where you illegally
+downloaded Krzysztof Kieślowski's _Trois Couleurs_–only to realize that you downloaded
+them in *.mkv format and the free version of Infuse doesn't support that. Serves you well,
+you cheapskate.
 
-Your second biggest passion–after watching international arthouse films–is developing HIP applications. If only you could do that on your MacBook...
+Your second biggest passion–after watching international arthouse films–is developing HIP applications.
+If only you could do that on your MacBook...
 
-This repository has you covered. While running HIP applications on macOS is a bit challenging, given the lack of a "Team Red" GPU, compiling and linking is entirely possible. You just need to prepare the MacBook a little bit before leaving on your international trip. You do need access to a Linux machine with an AMD GPU and a working ROCm install, including the ROCm development packages; we'll copy them over to the MacBook, and then use llvm/clang to cross-compile for x86 with AMD GPU support.
+## Containers? Virtual Machines? Meh...
 
-Just follow along with the 5 steps below. Some of the steps may seem a bit daunting, but the total number of steps is less than half of those of the _Alcoholics Anonymous_ program. Easy!
+One approach to building HIP applications on a Mac is to use a container (e.g., Docker)
+or a virtual machine (e.g., UTM) to emulate a Linux environment on macOS. These methods
+allow you to build HIP applications directly on a Linux system without needing to cross-compile.
+However, they come with significant drawbacks:
+
+1. **Performance Overhead**: A Virtual machine introduces additional layers of abstraction,
+   which leads to significantly lower performance compared to native compilation. An x86 Linux
+   container still needs an emulation layer in order to run on ARM.
+2. **Resource Usage**: Running a VM or container requires more system resources, such as CPU,
+   memory, and disk space, which may not be ideal on a MacBook.
+
+Our approach avoids these issues by enabling native cross-compilation directly on macOS.
+This method is lightweight, efficient, and allows you to leverage macOS's development tools
+while still targeting Linux for execution.
+
+While running HIP applications on macOS is a bit challenging, given the lack of a "Team Red" GPU,
+compiling and linking is entirely possible. You just need to prepare the MacBook a little bit before
+leaving on your international trip. You do need access to a Linux machine with an AMD GPU and a
+working ROCm install, including the ROCm development packages; we'll copy them over to the MacBook,
+and then use llvm/clang to cross-compile for x86 with AMD GPU support.
+
+Just follow along with the 5 steps below. Some of the steps may seem a bit daunting, but the total
+number of steps is less than half of those of the _Alcoholics Anonymous_ program. Easy!
 
 ## 1. Test Program for HIP Compilation
 
-We start with a simple HIP test program that launches a single workgroup of 8 threads, each printing its `threadIdx.x`. See:
+We start with a simple HIP test program that launches a single workgroup of 8 threads,
+each printing its `threadIdx.x`. See:
 - [hip_hello.cpp](./hip_hello.cpp)
 - [CMakeLists.txt](./CMakeLists.txt)
 
-To verify that this is a valid and working HIP program, build this repository and run the resulting program on your **AMD GPU Linux** machine:
+To verify that this is a valid and working HIP program, build this repository and run the resulting
+program on your **AMD GPU Linux** machine:
 ```bash
 git clone git@github.com:rwvo/mac_hipster.git
 cd mac_hipster
@@ -25,13 +57,15 @@ make
 ./hip_hello
 ```
 
-On macOS, we can’t run it (no AMD GPU), but by the end of step 5, we can compile and link it. And we can even copy the executable over to our Linux machine and run it there. Nice!
+On macOS, we can’t run it (no AMD GPU), but by the end of step 5, we can compile and link it. And we
+can even copy the executable over to our Linux machine and run it there. Nice!
 
 ---
 
 ## 2. Build a Custom LLVM with AMDGPU
 
-Apple’s Clang or Homebrew’s LLVM typically **cannot** cross-compile HIP code for x86_64 Linux (missing AMDGPU support). We’ll build LLVM from source, including the AMDGPU backend and LLD.
+Apple’s Clang or Homebrew’s LLVM typically **cannot** cross-compile HIP code for x86_64 Linux
+(missing AMDGPU support). We’ll build LLVM from source, including the AMDGPU backend and LLD.
 
 1. **Install prerequisites on macOS**
 
@@ -67,7 +101,9 @@ Apple’s Clang or Homebrew’s LLVM typically **cannot** cross-compile HIP code
    sudo ninja install
    ```
 
-After this, you have a custom LLVM in `/opt/llvm-amdgpu` with all necessary components. (Note: If you already have Homebrew’s LLVM installed, that’s fine—just make sure to reference `/opt/llvm-amdgpu/bin/clang++` in your compile commands.)
+After this, you have a custom LLVM in `/opt/llvm-amdgpu` with all necessary components.
+(Note: If you already have Homebrew’s LLVM installed, that’s fine—just make sure to reference
+`/opt/llvm-amdgpu/bin/clang++` in your compile commands.)
 
 ---
 
@@ -209,6 +245,15 @@ Hello from threadIdx.x = 1
 
 
 Future plans
-Being able to compile simple HIP codes on macOS is a nice first step. It would be nice to also be able to compile more complex CMake-based HIP projects. Ideally, we'd just pass some extra flags to CMake to point it to our cross-compiler, and otherwise configure as usual. Initial attempts to use CMake failed, even for the simple test project covered above. `find_package(HIP REQUIRED)` fails; I haven't spent any serious time on fixing that yet. This would be the next thing on my list.
+Being able to compile simple HIP codes on macOS is a nice first step. It would be nice to also be
+able to compile more complex CMake-based HIP projects. Ideally, we'd just pass some extra flags to
+CMake to point it to our cross-compiler, and otherwise configure as usual. Initial attempts to use
+CMake failed, even for the simple test project covered above. `find_package(HIP REQUIRED)` fails;
+I haven't spent any serious time on fixing that yet. This would be the next thing on my list.
 
-Copying the whole ROCm directory over from the Linux machine to our MacBook is a bit excessive. We don't need any ROCm exectutables, such as `roc-obj-ls`; these are x86 binaries that won't run on our MacBook. On the other hand, leaving out the whole `/opt/rocm/bin` directory may overdoing it; not everything in that directory is an executable; there are a bunch of scripts too, and we may need or want some of them. How much we can or should prune the rocm installation directory is still to be decided.
+Copying the whole ROCm directory over from the Linux machine to our MacBook is a bit excessive.
+We don't need any ROCm exectutables, such as `roc-obj-ls`; these are x86 binaries that won't run
+on our MacBook. On the other hand, leaving out the whole `/opt/rocm/bin` directory may overdoing it;
+not everything in that directory is an executable; there are a bunch of scripts too, and we may need
+or want some of them. How much we can or should prune the rocm installation directory is still to be
+decided.
