@@ -67,13 +67,40 @@ can even copy the executable over to our Linux machine and run it there. Nice!
 Apple’s Clang or Homebrew’s LLVM typically **cannot** cross-compile HIP code for x86_64 Linux
 (missing AMDGPU support). We’ll build LLVM from source, including the AMDGPU backend and LLD.
 
-1. **Install prerequisites on macOS**
+### Verify and Install Apple Clang
 
-   Install Homebrew if you don't have it yet. See https://brew.sh for instructions. Then:
+To build LLVM on macOS, we need Apple Clang, which is included with the Xcode Command Line Tools. Here's how to check if you already have it installed and how to install it if you don't.
+
+1. **Check if Apple Clang is Installed**:
+   Open a terminal and run:
+   ```bash
+   clang --version
+   ```
+   If you see output indicating "Apple clang" along with a version number, you're good to go.
+
+2. **Install Xcode Command Line Tools**:
+   If `clang` is not found or the output doesn't mention "Apple clang," install the Xcode Command Line Tools:
+   ```bash
+   xcode-select --install
+   ```
+   Follow the on-screen instructions to complete the installation.
+
+3. **Verify Installation**:
+   After installation, re-run:
+   ```bash
+   clang --version
+   ```
+   Ensure the output mentions "Apple clang."
+
+Apple Clang is now ready to use for building LLVM.
+
+### Install prerequisites on macOS
+
+   1. Install Homebrew if you don't have it yet. See https://brew.sh for instructions. Then:
    ```bash
    brew install cmake ninja
    ```
-2. **Clone the LLVM repo**:
+   2. **Clone the LLVM repo**:
    ```bash
    git clone https://github.com/llvm/llvm-project.git
    cd llvm-project
